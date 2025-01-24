@@ -20,10 +20,11 @@ const dayEl = document.querySelector('[data-days]');
 const hourEl = document.querySelector('[data-hours]');
 const minuteEl = document.querySelector('[data-minutes]');
 const secondEl = document.querySelector('[data-seconds]');
-
-startBtnEl.addEventListener('click', onStartBtn);
+const datetimePickerEl = document.querySelector('#datetime-picker');
 
 let userSelectedDate;
+
+startBtnEl.addEventListener('click', onStartBtn);
 
 function onClose([selectedDate]) {
   if (selectedDate > Date.now()) {
@@ -46,12 +47,15 @@ function onClose([selectedDate]) {
 
 function onStartBtn() {
   startBtnEl.disabled = true;
+  datetimePickerEl.disabled = true;
+  
   const id = setInterval(() => {
     const diffTime = userSelectedDate - Date.now();
     if (diffTime >= 0) {
       updateTimerEl(convertMs(diffTime));
     } else {
       clearInterval(id);
+      datetimePickerEl.disabled = false;
     }
   }, 1000);
 }
